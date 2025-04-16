@@ -2686,6 +2686,14 @@ int mbedtls_ssl_parse_server_name_ext(mbedtls_ssl_context *ssl,
 #if defined(MBEDTLS_SSL_RECORD_SIZE_LIMIT)
 #define MBEDTLS_SSL_RECORD_SIZE_LIMIT_EXTENSION_DATA_LENGTH (2)
 #define MBEDTLS_SSL_RECORD_SIZE_LIMIT_MIN (64)
+/*
+ * Endpoints MUST NOT send a "large_record_size_limit" extension with a
+ * value smaller than 64 or larger than 2^32 - 256.
+ * See draft-ietf-tls-super-jumbo-record-limit-00, section 3.
+ */
+
+#define MBEDTLS_SSL_LARGE_RECORD_SIZE_LIMIT_MIN (64)
+#define MBEDTLS_SSL_LARGE_RECORD_SIZE_LIMIT_MAX (4294967040) 
 
 MBEDTLS_CHECK_RETURN_CRITICAL
 int mbedtls_ssl_tls13_parse_record_size_limit_ext(mbedtls_ssl_context *ssl,
