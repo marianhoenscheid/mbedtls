@@ -2691,7 +2691,7 @@ int mbedtls_ssl_parse_server_name_ext(mbedtls_ssl_context *ssl,
  * value smaller than 64 or larger than 2^32 - 256.
  * See draft-ietf-tls-super-jumbo-record-limit-00, section 3.
  */
-
+#if defind(MBEDTLS_SSL_LARGE_RECORD_SIZE_LIMIT)
 #define MBEDTLS_SSL_LARGE_RECORD_SIZE_LIMIT_MIN (64)
 #define MBEDTLS_SSL_LARGE_RECORD_SIZE_LIMIT_MAX (4294967040) 
 
