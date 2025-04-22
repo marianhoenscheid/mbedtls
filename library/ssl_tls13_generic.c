@@ -1737,4 +1737,89 @@ int mbedtls_ssl_tls13_parse_record_size_limit_ext(mbedtls_ssl_context *ssl,
 }
 #endif /* MBEDTLS_SSL_RECORD_SIZE_LIMIT */
 
+/* 
+ * Large Record Size Extension 
+ * 
+ */
+
+ #if defined(MBEDTLS_SSL_LARGE_RECORD_SIZE_LIMIT)
+/* draft-ietf-tls-super-jumbo-record-limit, section 3:
+ *
+ *   The "large_record_size_limit" Extension
+ *
+ *  The ExtensionData of the "large_record_size_limit" extension is
+ *  LargeRecordSizeLimit:
+ *
+ *     uint32 LargeRecordSizeLimit;
+ *
+ *  LargeRecordSizeLimit denotes the maximum size, in bytes, of inner
+ *  plaintexts that the endpoint is willing to receive.  It includes the
+ *  content type and padding (i.e., the complete length of
+ *  TLSInnerPlaintext).  AEAD expansion is not included.
+ *
+ *  The large record size limit only applies to records sent toward the
+ *  endpoint that advertises the limit.  An endpoint can send records
+ *  that are larger than the limit it advertises as its own limit.  A TLS
+ *  endpoint that receives a record larger than its advertised limit MUST
+ *  generate a fatal "record_overflow" alert; a DTLS endpoint that
+ *  receives a record larger than its advertised limit MAY either
+ *  generate a fatal "record_overflow" alert or discard the record.  An
+ *  endpoint MUST NOT add padding to records that would cause the length
+ *  of TLSInnerPlaintext to exceed the limit advertised by the other
+ *  endpoint.
+ */
+MBEDTLS_CHECK_RETURN_CRITICAL
+int mbedtls_ssl_tls13_parse_record_size_limit_ext(mbedtls_ssl_context *ssl,
+                                                  const unsigned char *buf,
+                                                  const unsigned char *end)
+{
+    const unsigned char *p = buf;
+    uint32_t large_record_size_limit;
+    const size_t extension_data_len = end - buf;
+
+    if (extension_data_len !=
+        MBEDTLS_SSL_LARGE_RECORD_SIZE_LIMIT_EXTENSION_DATA_LENGTH) {
+        MBEDTLS_SSL_DEBUG_MSG(2,
+                              ("large_record_size_limit extension has invalid length: %"
+                               MBEDTLS_PRINTF_SIZET " Bytes",
+                               extension_data_len));
+
+        MBEDTLS_SSL_PEND_FATAL_ALERT(
+            MBEDTLS_SSL_ALERT_MSG_ILLEGAL_PARAMETER,
+            MBEDTLS_ERR_SSL_ILLEGAL_PARAMETER);
+        return MBEDTLS_ERR_SSL_ILLEGAL_PARAMETER;
+    }
+
+    MBEDTLS_SSL_CHK_BUF_READ_PTR(p, end, 2);
+    large_record_size_limit = MBEDTLS_GET_UINT32_BE(p, 0);
+
+    MBEDTLS_SSL_DEBUG_MSG(2, ("RecordSizeLimit: %u Bytes", record_size_limit));
+    /*
+    * Endpoints MUST NOT send a "large_record_size_limit" extension with a
+    * value smaller than 64 or larger than 2^32 - 256.
+    * See draft-ietf-tls-super-jumbo-record-limit-00, section 3.
+    */
+    if (large_record_size_limit < MBEDTLS_SSL_LARGE_RECORD_SIZE_LIMIT_MIN) {
+        MBEDTLS_SSL_PEND_FATAL_ALERT(
+            MBEDTLS_SSL_ALERT_MSG_ILLEGAL_PARAMETER,
+            MBEDTLS_ERR_SSL_ILLEGAL_PARAMETER);
+        return MBEDTLS_ERR_SSL_ILLEGAL_PARAMETER;
+    }
+    if (large_record_size_limit > MBEDTLS_SSL_LARGE_RECORD_SIZE_LIMIT_MAX) {
+        MBEDTLS_SSL_PEND_FATAL_ALERT(
+            MBEDTLS_SSL_ALERT_MSG_ILLEGAL_PARAMETER,
+            MBEDTLS_ERR_SSL_ILLEGAL_PARAMETER);
+        return MBEDTLS_ERR_SSL_ILLEGAL_PARAMETER;
+    }
+
+    MBEDTLS_SSL_DEBUG_MSG(
+        2, ("record_size_limit extension is still in development. Aborting handshake."));
+
+    MBEDTLS_SSL_PEND_FATAL_ALERT(
+        MBEDTLS_SSL_ALERT_MSG_UNSUPPORTED_EXT,
+        MBEDTLS_ERR_SSL_UNSUPPORTED_EXTENSION);
+    return MBEDTLS_ERR_SSL_UNSUPPORTED_EXTENSION;
+}
+#endif /* MBEDTLS_SSL_RECORD_SIZE_LIMIT */
+
 #endif /* MBEDTLS_SSL_TLS_C && MBEDTLS_SSL_PROTO_TLS1_3 */
