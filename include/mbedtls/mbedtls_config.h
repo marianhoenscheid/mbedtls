@@ -1731,7 +1731,7 @@
  *
  * Uncomment this macro to enable support for the record_size_limit extension
  */
-//#define MBEDTLS_SSL_RECORD_SIZE_LIMIT
+#define MBEDTLS_SSL_RECORD_SIZE_LIMIT
 
 #define MBEDTLS_SSL_LARGE_RECORD_SIZE_LIMIT
 
