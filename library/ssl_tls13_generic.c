@@ -1769,7 +1769,7 @@ int mbedtls_ssl_tls13_parse_record_size_limit_ext(mbedtls_ssl_context *ssl,
  *  endpoint.
  */
 MBEDTLS_CHECK_RETURN_CRITICAL
-int mbedtls_ssl_tls13_parse_record_size_limit_ext(mbedtls_ssl_context *ssl,
+int mbedtls_ssl_tls13_parse_large_record_size_limit_ext(mbedtls_ssl_context *ssl,
                                                   const unsigned char *buf,
                                                   const unsigned char *end)
 {
@@ -1793,7 +1793,7 @@ int mbedtls_ssl_tls13_parse_record_size_limit_ext(mbedtls_ssl_context *ssl,
     MBEDTLS_SSL_CHK_BUF_READ_PTR(p, end, 2);
     large_record_size_limit = MBEDTLS_GET_UINT32_BE(p, 0);
 
-    MBEDTLS_SSL_DEBUG_MSG(2, ("RecordSizeLimit: %u Bytes", record_size_limit));
+    MBEDTLS_SSL_DEBUG_MSG(2, ("RecordSizeLimit: %u Bytes", large_record_size_limit));
     /*
     * Endpoints MUST NOT send a "large_record_size_limit" extension with a
     * value smaller than 64 or larger than 2^32 - 256.
@@ -1813,7 +1813,7 @@ int mbedtls_ssl_tls13_parse_record_size_limit_ext(mbedtls_ssl_context *ssl,
     }
 
     MBEDTLS_SSL_DEBUG_MSG(
-        2, ("record_size_limit extension is still in development. Aborting handshake."));
+        2, ("large_record_size_limit extension is still in development. Aborting handshake."));
 
     MBEDTLS_SSL_PEND_FATAL_ALERT(
         MBEDTLS_SSL_ALERT_MSG_UNSUPPORTED_EXT,

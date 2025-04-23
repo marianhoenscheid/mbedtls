@@ -2171,7 +2171,7 @@ static int ssl_tls13_parse_encrypted_extensions(mbedtls_ssl_context *ssl,
  * Support for the large record size limit extension
  */
 
-#if defined(MBEDTLS_SSL_LAGRE_RECORD_SIZE_LIMIT)
+#if defined(MBEDTLS_SSL_LARGE_RECORD_SIZE_LIMIT)
             case MBEDTLS_TLS_EXT_LARGE_RECORD_SIZE_LIMIT:
                 MBEDTLS_SSL_DEBUG_MSG(3, ("found large_record_size_limit extension"));
 

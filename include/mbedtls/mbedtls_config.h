@@ -1731,7 +1731,7 @@
  *
  * Uncomment this macro to enable support for the record_size_limit extension
  */
-#define MBEDTLS_SSL_RECORD_SIZE_LIMIT
+//#define MBEDTLS_SSL_RECORD_SIZE_LIMIT
 
 #define MBEDTLS_SSL_LARGE_RECORD_SIZE_LIMIT
 
@@ -1776,7 +1776,7 @@
  *
  * Uncomment this macro to enable the support for TLS 1.3.
  */
-//#define MBEDTLS_SSL_PROTO_TLS1_3
+#define MBEDTLS_SSL_PROTO_TLS1_3
 
 /**
  * \def MBEDTLS_SSL_TLS1_3_COMPATIBILITY_MODE

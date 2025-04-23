@@ -526,7 +526,6 @@ uint32_t mbedtls_ssl_get_extension_id(unsigned int extension_type)
 
         case MBEDTLS_TLS_EXT_ALPN:
             return MBEDTLS_SSL_EXT_ID_ALPN;
-
         case MBEDTLS_TLS_EXT_SCT:
             return MBEDTLS_SSL_EXT_ID_SCT;
 
@@ -581,22 +580,21 @@ uint32_t mbedtls_ssl_get_extension_id(unsigned int extension_type)
         case MBEDTLS_TLS_EXT_EXTENDED_MASTER_SECRET:
             return MBEDTLS_SSL_EXT_ID_EXTENDED_MASTER_SECRET;
 
+        case MBEDTLS_TLS_EXT_LARGE_RECORD_SIZE_LIMIT:
+            return MBEDTLS_SSL_EXT_ID_LARGE_RECORD_SIZE_LIMIT;
+
         case MBEDTLS_TLS_EXT_RECORD_SIZE_LIMIT:
             return MBEDTLS_SSL_EXT_ID_RECORD_SIZE_LIMIT;
 
         case MBEDTLS_TLS_EXT_SESSION_TICKET:
             return MBEDTLS_SSL_EXT_ID_SESSION_TICKET;
-
     }
-
     return MBEDTLS_SSL_EXT_ID_UNRECOGNIZED;
 }
-
 uint32_t mbedtls_ssl_get_extension_mask(unsigned int extension_type)
 {
     return 1 << mbedtls_ssl_get_extension_id(extension_type);
 }
-
 #if defined(MBEDTLS_DEBUG_C)
 static const char *extension_name_table[] = {
     [MBEDTLS_SSL_EXT_ID_UNRECOGNIZED] = "unrecognized",
@@ -627,9 +625,10 @@ static const char *extension_name_table[] = {
     [MBEDTLS_SSL_EXT_ID_ENCRYPT_THEN_MAC] = "encrypt_then_mac",
     [MBEDTLS_SSL_EXT_ID_EXTENDED_MASTER_SECRET] = "extended_master_secret",
     [MBEDTLS_SSL_EXT_ID_SESSION_TICKET] = "session_ticket",
+    [MBEDTLS_SSL_EXT_ID_LARGE_RECORD_SIZE_LIMIT] = "large_record_size_limit",
     [MBEDTLS_SSL_EXT_ID_RECORD_SIZE_LIMIT] = "record_size_limit"
+    
 };
-
 static unsigned int extension_type_table[] = {
     [MBEDTLS_SSL_EXT_ID_UNRECOGNIZED] = 0xff,
     [MBEDTLS_SSL_EXT_ID_SERVERNAME] = MBEDTLS_TLS_EXT_SERVERNAME,
@@ -659,7 +658,9 @@ static unsigned int extension_type_table[] = {
     [MBEDTLS_SSL_EXT_ID_ENCRYPT_THEN_MAC] = MBEDTLS_TLS_EXT_ENCRYPT_THEN_MAC,
     [MBEDTLS_SSL_EXT_ID_EXTENDED_MASTER_SECRET] = MBEDTLS_TLS_EXT_EXTENDED_MASTER_SECRET,
     [MBEDTLS_SSL_EXT_ID_SESSION_TICKET] = MBEDTLS_TLS_EXT_SESSION_TICKET,
+    [MBEDTLS_SSL_EXT_ID_LARGE_RECORD_SIZE_LIMIT] = MBEDTLS_TLS_EXT_LARGE_RECORD_SIZE_LIMIT,
     [MBEDTLS_SSL_EXT_ID_RECORD_SIZE_LIMIT] = MBEDTLS_TLS_EXT_RECORD_SIZE_LIMIT
+    
 };
 
 const char *mbedtls_ssl_get_extension_name(unsigned int extension_type)

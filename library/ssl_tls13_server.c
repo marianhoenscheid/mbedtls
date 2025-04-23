@@ -1663,9 +1663,9 @@ static int ssl_tls13_parse_client_hello(mbedtls_ssl_context *ssl,
                 break;
 #endif /* MBEDTLS_SSL_RECORD_SIZE_LIMIT */
 
-#if defined(MBEDTLS_SSL_LARGER_RECORD_SIZE_LIMIT)
-            case MBEDTLS_TLS_EXT_LARGER_RECORD_SIZE_LIMIT:
-                MBEDTLS_SSL_DEBUG_MSG(3, ("found larger_record_size_limit extension"));
+#if defined(MBEDTLS_SSL_LARGE_RECORD_SIZE_LIMIT)
+            case MBEDTLS_TLS_EXT_LARGE_RECORD_SIZE_LIMIT:
+                MBEDTLS_SSL_DEBUG_MSG(3, ("found large_record_size_limit extension"));
 
                 ret = mbedtls_ssl_tls13_parse_large_record_size_limit_ext(
                     ssl, p, extension_data_end);
@@ -1673,7 +1673,7 @@ static int ssl_tls13_parse_client_hello(mbedtls_ssl_context *ssl,
                 return ret;
 
                 break;
-#endif /* MBEDTLS_SSL_LARGER_RECORD_SIZE_LIMIT */
+#endif /* MBEDTLS_SSL_LARGE_RECORD_SIZE_LIMIT */
 
             default:
                 MBEDTLS_SSL_PRINT_EXT(

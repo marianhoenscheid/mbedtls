@@ -97,6 +97,7 @@
 #define MBEDTLS_SSL_EXT_ID_EXTENDED_MASTER_SECRET     26
 #define MBEDTLS_SSL_EXT_ID_SESSION_TICKET             27
 #define MBEDTLS_SSL_EXT_ID_RECORD_SIZE_LIMIT          28
+#define MBEDTLS_SSL_EXT_ID_LARGE_RECORD_SIZE_LIMIT    29
 
 /* Utility for translating IANA extension type. */
 uint32_t mbedtls_ssl_get_extension_id(unsigned int extension_type);
@@ -2698,6 +2699,7 @@ int mbedtls_ssl_tls13_parse_record_size_limit_ext(mbedtls_ssl_context *ssl,
  * value smaller than 64 or larger than 2^32 - 256.
  * See draft-ietf-tls-super-jumbo-record-limit-00, section 3.
  */
+
 #if defined(MBEDTLS_SSL_LARGE_RECORD_SIZE_LIMIT)
 #define MBEDTLS_SSL_LARGE_RECORD_SIZE_LIMIT_EXTENSION_DATA_LENGTH (2)
 #define MBEDTLS_SSL_LARGE_RECORD_SIZE_LIMIT_MIN (64)
@@ -2707,7 +2709,7 @@ MBEDTLS_CHECK_RETURN_CRITICAL
 int mbedtls_ssl_tls13_parse_large_record_size_limit_ext(mbedtls_ssl_context *ssl,
                                                   const unsigned char *buf,
                                                   const unsigned char *end);
-#endif
+#endif /* MBEDTLS_SSL_LARGE_RECORD_SIZE_LIMIT */
 
 #if defined(MBEDTLS_SSL_ALPN)
 MBEDTLS_CHECK_RETURN_CRITICAL
