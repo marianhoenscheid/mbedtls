@@ -97,7 +97,7 @@
 #define MBEDTLS_SSL_EXT_ID_EXTENDED_MASTER_SECRET     26
 #define MBEDTLS_SSL_EXT_ID_SESSION_TICKET             27
 #define MBEDTLS_SSL_EXT_ID_RECORD_SIZE_LIMIT          28
-#define MBEDTLS_SSL_EXT_ID_LARGE_RECORD_SIZE_LIMIT    100
+#define MBEDTLS_SSL_EXT_ID_LARGE_RECORD_SIZE_LIMIT    29
 
 /* Utility for translating IANA extension type. */
 uint32_t mbedtls_ssl_get_extension_id(unsigned int extension_type);
@@ -159,7 +159,7 @@ uint32_t mbedtls_ssl_get_extension_mask(unsigned int extension_type);
      MBEDTLS_SSL_EXT_MASK(POST_HANDSHAKE_AUTH)                    | \
      MBEDTLS_SSL_EXT_MASK(SIG_ALG_CERT)                           | \
      MBEDTLS_SSL_EXT_MASK(RECORD_SIZE_LIMIT)                      | \
-     MBEDTLS_SSL_EXT_MASK(LARGE_RECORD_SIZE_LIMIT)                      | \
+     MBEDTLS_SSL_EXT_MASK(LARGE_RECORD_SIZE_LIMIT)                | \
      MBEDTLS_SSL_TLS1_3_EXT_MASK_UNRECOGNIZED)
 
 /* RFC 8446 section 4.2. Allowed extensions for EncryptedExtensions */
